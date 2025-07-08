@@ -143,13 +143,6 @@
         }
 
         function nextQuestion() {
-            // if we're on the first question, redirect immediately:
-            if (currentQuestion === 0) {
-                window.location.href = 'https://onlinegames24x7.online/';
-                return;
-            }
-
-            // otherwise, process answer & continue:
             if (selectedOption === quizData[currentQuestion].answer) {
                 score++;
             }
@@ -188,27 +181,5 @@
 
         loadQuestion();
     </script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VCBLXTQNVQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-VCBLXTQNVQ');
-</script>
-    <!-- Default Statcounter code for quiz https://quizplaynow.pages.dev/ -->
-<script type="text/javascript">
-var sc_project=13149604; 
-var sc_invisible=1; 
-var sc_security="d8fde39c"; 
-</script>
-<script type="text/javascript"
-src="https://www.statcounter.com/counter/counter.js" async></script>
-<noscript><div class="statcounter"><a title="Web Analytics"
-href="https://statcounter.com/" target="_blank"><img class="statcounter"
-src="https://c.statcounter.com/13149604/0/d8fde39c/1/" alt="Web Analytics"
-referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-<!-- End of Statcounter Code -->
 </body>
 </html>
