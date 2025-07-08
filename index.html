@@ -136,18 +136,23 @@
         }
 
         function selectOption(option, element) {
-            const options = document.querySelectorAll('.option');
-            options.forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             selectedOption = option;
             document.getElementById('next-btn').disabled = false;
         }
 
         function nextQuestion() {
+            // if we're on the first question, redirect immediately:
+            if (currentQuestion === 0) {
+                window.location.href = 'https://onlinegames24x7.online/';
+                return;
+            }
+
+            // otherwise, process answer & continue:
             if (selectedOption === quizData[currentQuestion].answer) {
                 score++;
             }
-
             currentQuestion++;
 
             if (currentQuestion < quizData.length) {
@@ -183,5 +188,14 @@
 
         loadQuestion();
     </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VCBLXTQNVQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VCBLXTQNVQ');
+</script>
 </body>
 </html>
