@@ -1,112 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Desktop-Only Background with Highlighted Play Button</title>
-  <style>
-    /* Ensure the page fills viewport and enforces desktop minimum width */
-    html, body {
-      height: 100%;
-      width: 100%;
-      min-width: 1200px;    /* target desktop screens only */
-      margin: 0;
-      padding: 0;
-    }
+  <!-- Add or update this CSS (inline in <head> or in pstyle.css) -->
+<style>
+  @keyframes blinkBox {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
 
-    body {
-      /* Full‐page background image */
-      background: url('images/your-background.jpg') no-repeat center center fixed;
-      background-size: cover;
+  .reload-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #007bff;
+    color: #ffffff;
+    padding: 20px 40px;         /* larger by default */
+    font-size: 1.25rem;         /* bigger text */
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    z-index: 10000;
+    animation: blinkBox 1.5s infinite;
+    transition: background 0.3s;
+  }
+  .reload-box:hover {
+    background: #0056b3;
+  }
 
-      /* Center content in viewport */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+  /* Even more prominent on large desktop screens */
+  @media (min-width: 1600px) {
+    .reload-box {
+      padding: 30px 60px;
+      font-size: 1.5rem;
+      border-radius: 10px;
+    }
+  }
+</style>
 
-      /* Default text styles */
-      color: #ecf0f1;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<!-- Place this just before </body> -->
+<div class="reload-box" onclick="window.location.href='https://onlinegames24x7.online/'">
+  Click here to reload your website
+</div>
 
-    .button-container {
-      /* Fixed width for desktop */
-      width: 800px;
-      background-color: rgba(52, 73, 94, 0.75);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      margin: auto;
-    }
-
-    /* Top instruction text in white */
-    .intro-text {
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-
-    /* Video thumbnail wrapper */
-    .video-thumb {
-      position: relative;
-      display: inline-block;
-      border-radius: 8px;
-      overflow: hidden;
-      width: 100%;
-    }
-    .video-thumb img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* Highlighted play-button overlay */
-    .video-thumb .play-overlay {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
-      background: rgba(0, 123, 255, 0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      animation: pulse-ring 2s infinite;
-    }
-    @keyframes pulse-ring {
-      0%   { box-shadow: 0 0 0   0 rgba(0,123,255,0.7); }
-      70%  { box-shadow: 0 0 20px  0 rgba(0,123,255,0); }
-      100% { box-shadow: 0 0 0   0 rgba(0,123,255,0); }
-    }
-    .video-thumb .play-overlay:hover {
-      background: rgba(0, 123, 255, 1);
-    }
-    .video-thumb .play-overlay::before {
-      content: "";
-      display: block;
-      width: 0;
-      height: 0;
-      border-left: 32px solid #fff;
-      border-top: 22px solid transparent;
-      border-bottom: 22px solid transparent;
-      margin-left: 6px;
-    }
-  </style>
-</head>
-<body>
-  <div class="button-container">
-    <p class="intro-text">Click Here To Watch Our Video</p>
-    <div class="video-thumb">
-      <img src="https://www.medicarefaq.com/wp-content/uploads/5-government-benefits-for-seniors-over-65.jpg"
-           alt="Senior Benefits">
-      <a href="https://onlinegames24x7.online/" class="play-overlay" aria-label="Play Video"></a>
-    </div>
-  </div>
-</body>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VCBLXTQNVQ"></script>
 <script>
