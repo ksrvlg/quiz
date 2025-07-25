@@ -1,55 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Play Online Games</title>
-  <style>
-    /* The clickable box */
-    .cta-box {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #28a745;
-      color: #ffffff;
-      padding: 20px 40px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s;
-      z-index: 1000;
-    }
-    .cta-box:hover {
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="quiz-container" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Welcome to the Quiz App</h1>
+            <p class="text-gray-600 mb-6">Test your knowledge with our fun quiz!</p>
+            <button id="start-btn" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Start Quiz</button>
+        </div>
 
-  <div class="cta-box" onclick="window.location.href='https://onlinegames24x7.online/#'">
-    👉 Click Here to Play Online Games! 👈
-  </div>
-  <!-- Default Statcounter code for social security
-https://socailsecuritybenefits.pages.dev/ -->
-<script type="text/javascript">
-var sc_project=13151168; 
-var sc_invisible=1; 
-var sc_security="aa8565b7"; 
-</script>
-<script type="text/javascript"
-src="https://www.statcounter.com/counter/counter.js"
-async></script>
-<noscript><div class="statcounter"><a title="Web Analytics
-Made Easy - Statcounter" href="https://statcounter.com/"
-target="_blank"><img class="statcounter"
-src="https://c.statcounter.com/13151168/0/aa8565b7/1/"
-alt="Web Analytics Made Easy - Statcounter"
-referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-<!-- End of Statcounter Code -->
+        <!-- Quiz Questions -->
+        <div id="quiz" class="hidden">
+            <h2 id="question" class="text-xl font-semibold mb-4"></h2>
+            <div id="options" class="space-y-2"></div>
+            <p id="feedback" class="mt-4 text-sm"></p>
+            <button id="next-btn" class="bg-blue-500 text-white px-6 py-2 rounded mt-4 hover:bg-blue-600 hidden">Next</button>
+        </div>
 
+        <!-- Results Screen -->
+        <div id="results" class="hidden text-center">
+            <h2 class="text-2xl font-bold mb-4">Quiz Completed!</h2>
+            <p id="score" class="text-lg mb-4"></p>
+            <button id="restart-btn" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Madrid"],
+                answer: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Jupiter", "Mars", "Venus", "Mercury"],
+                answer: "Mars"
+            },
+            {
+                question: "What is 2 + 2?",
+                options: ["3", "4", "5", "6"],
+                answer: "4"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const quiz = document.getElementById('quiz');
+        const results = document.getElementById('results');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreElement = document.getElementById('score');
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', loadNextQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            quiz.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQuiz = quizData[currentQuestion];
+            questionElement.textContent = currentQuiz.question;
+            optionsElement.innerHTML = '';
+            feedbackElement.textContent = '';
+
+            currentQuiz.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('bg-gray-200', 'w-full', 'p-2', 'rounded', 'hover:bg-gray-300');
+                button.addEventListener('click', () => selectOption(option));
+                optionsElement.appendChild(button);
+            });
+
+            nextBtn.classList.add('hidden');
+        }
+
+        function selectOption(selected) {
+            const currentQuiz = quizData[currentQuestion];
+            if (selected === currentQuiz.answer) {
+                score++;
+                feedbackElement.textContent = 'Correct!';
+                feedbackElement.classList.add('text-green-500');
+            } else {
+                feedbackElement.textContent = `Wrong! The correct answer is ${currentQuiz.answer}.`;
+                feedbackElement.classList.add('text-red-500');
+            }
+
+            const buttons = optionsElement.getElementsByTagName('button');
+            for (let button of buttons) {
+                button.disabled = true;
+                if (button.textContent === currentQuiz.answer) {
+                    button.classList.add('bg-green-500', 'text-white');
+                } else if (button.textContent === selected && selected !== currentQuiz.answer) {
+                    button.classList.add('bg-red-500', 'text-white');
+                }
+            }
+
+            nextBtn.classList.remove('hidden');
+        }
+
+        function loadNextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quiz.classList.add('hidden');
+            results.classList.remove('hidden');
+            scoreElement.textContent = `You scored ${score} out of ${quizData.length}!`;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            results.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
-
